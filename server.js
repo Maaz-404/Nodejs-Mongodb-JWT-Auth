@@ -74,9 +74,6 @@ app.post("/create-payment-intent", async (req, res) => {
   });
 
 });
-  });
-
-});
 
 // routes
 require("./app/routes/auth.routes")(app);
