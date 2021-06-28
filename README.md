@@ -1,4 +1,4 @@
-### [Note]: This repository is a part of "DO-Nation" project
+### ![Note]: This repository is a part of "DO-Nation" project
 
 # Node.js MongoDB – User Authentication & Authorization example with JWT & Mongoose
 
