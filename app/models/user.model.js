@@ -12,12 +12,12 @@ const User = mongoose.model(
         ref: "Role"
       }
     ],
-//     transactions: [
-//         {
-//             type: mongoose.Schema.Types.ObjectId,
-//             ref: "Transaction"
-//         }
-//     ]
+    transactions: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Transaction"
+        }
+    ],
   })
 );
 

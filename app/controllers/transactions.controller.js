@@ -4,7 +4,7 @@ exports.view = function (req, res) {
             res.send(err);
         res.json({
             message: 'transaction details loading..',
-            data: product
+            data: user_id
         });
     });
 }; 
