@@ -44,20 +44,22 @@ app.get("/", (req, res) => {
 app.use(express.static("."));
 app.use(express.json());
 
-const calculateOrderAmount = items => {
+const getDonationInfo = amount => {
   // Replace this constant with a calculation of the order's amount
   // Calculate the order total on the server to prevent
   // people from directly manipulating the amount on the client
-  return 1400;
+  return amount;
+  console.log(amount);
 };
 
 app.post("/create-payment-intent", async (req, res) => {
-  const { items } = req.body;
+//   const { items } = req.body;
+  const amount  = req.body.amount;
   //receive username here just like you receive items object & store it in database in webhook post request
   
   // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: calculateOrderAmount(items),
+    amount: getDonationInfo(amount),
     currency: "usd"
   });
 
@@ -72,8 +74,9 @@ app.post('/posting-data', (req, res) => {
     
     
     console.log(event);
+    console.log(event.payment_intent);
     
-    switch (event.type) {
+    switch (event) {
 
     case 'payment_intent.succeeded':
 
