@@ -49,40 +49,47 @@ const getDonationInfo = amount => {
   // Calculate the order total on the server to prevent
   // people from directly manipulating the amount on the client
   return amount;
-  console.log(amount);
 };
 
 app.post("/create-payment-intent", async (req, res) => {
 //   const { items } = req.body;
   const amount  = req.body.amount;
+  const channelID = req.body.channelID;
+  
   //receive username here just like you receive items object & store it in database in webhook post request
   
   // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
     amount: getDonationInfo(amount),
+    description: channelID,                                                       
     currency: "usd"
   });
-
+  
   res.send({
     clientSecret: paymentIntent.client_secret
   });
 });
 
-app.post('/posting-data', (req, res) => {
+// app.post('/posting-data', (req, res) => {
+//     
+//    const channelID = req.body.channelID;
+//     
+//     console.log(channelID)
     
-    event = req.body;
-    
-    
-    console.log(event);
+/*    
+    console.log(conevent);
     console.log(event.payment_intent);
-    
+    console.log(event.paymentIntent);
+    console.log(event.paymentIntent.id);
+    console.log(event.channelID);*/
+  /*  
     switch (event) {
 
     case 'payment_intent.succeeded':
 
       const paymentIntent = event.data.object;
 
-      console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);
+      console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);*/
       
       
 
@@ -90,33 +97,35 @@ app.post('/posting-data', (req, res) => {
 
       // handlePaymentIntentSucceeded(paymentIntent);
 
-      break;
-
-    case 'payment_method.attached':
-
-      const paymentMethod = event.data.object;
+//       break;
+// 
+//     case 'payment_method.attached':
+// 
+//       const paymentMethod = event.data.object;
 
       // Then define and call a method to handle the successful attachment of a PaymentMethod.
 
       // handlePaymentMethodAttached(paymentMethod);
 
-      break;
-
-    default:
+//       break;
+// 
+//     default:
 
       // Unexpected event type
 
-      console.log(`Unhandled event type ${event.type}.`);
-
-  }
+//       console.log(`Unhandled event type ${event.type}.`);
+//       console.log(`Unhandled event type ${event}.`);
+//       console.log(`Unhandled event type ${event.channelID}.`);
+// 
+//   }
 
   // Return a 200 response to acknowledge receipt of the event
-
-  res.send();
+/*
+  res.send("Good to go"+ "   " + "ChannelID" + JSON.parse(channelID));
     
     
     
-})
+})*/
 
 // routes
 require("./app/routes/auth.routes")(app);
