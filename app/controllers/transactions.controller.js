@@ -35,12 +35,12 @@ exports.stripe = async (req, res) => {
 exports.transactions = (req, res) => {
   const transaction = new Transaction({
     channelID: req.body.description,
-    paymentIntent: req.body.payment_intent,
+    paymentIntent: req.body.id,
     amount: req.body.amount,
     status: req.body.status
   });
 
-  transaction.save((err, user) => {
+  transaction.save((err, transaction) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
@@ -52,9 +52,29 @@ exports.transactions = (req, res) => {
             return;
           }
 
-          res.send({ message: "Transaction registered successfully!" });
+          res.send({ message: "Transaction registered successfully!", data: transaction });
         });
       });
 //     }
   };
+  
+exports.new = function (req, res) {
+    var transaction = new Transaction();
+    transaction.description = req.body.description;
+//     transaction.paymentIntent = req.body.paymentIntent;
+    transaction.amount = req.body.amount;
+    transaction.status = req.body.status;
+// save the product and check for errors
+    transaction.save(function (err) {
+        // Check for validation error
+        if (err)
+            res.json(err);
+        else
+            res.json({
+                message: 'New Transaction created!',
+                data: transaction
+            });
+    });
+};
+
 
