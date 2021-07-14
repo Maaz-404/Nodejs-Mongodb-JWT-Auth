@@ -11,5 +11,9 @@ module.exports = function(app) {
     app.post("/create-payment-intent", 
                 controller.stripe
             )
+    
+    app.get("/find", 
+                controller.view
+            )
 
 };

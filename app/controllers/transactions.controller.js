@@ -3,12 +3,12 @@ const Transaction = db.transaction;
 const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 
 exports.view = function (req, res) {
-    user.findOne(req.body.channelID, function (err, User) {
+    Transaction.find(req.body.channelID, function (err, transactions) {
         if (err)
             res.send(err);
         res.json({
             message: 'transaction details loading..',
-            data: user_id
+            data: transactions
         });
     });
 }; 

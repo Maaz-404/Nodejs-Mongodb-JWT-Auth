@@ -2,6 +2,7 @@ const config = require("../config/auth.config");
 const db = require("../models");
 const User = db.user;
 const Role = db.role;
+const Transaction = db.transactions;
 
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
@@ -95,23 +96,15 @@ exports.signin = (req, res) => {
 
       var authorities = [];
 
-      var transactions = [];
-
       for (let i = 0; i < user.roles.length; i++) {
         authorities.push("ROLE_" + user.roles[i].name.toUpperCase());
       }
-      
-      for (let j = 0; j < user.transactions.length; j++) {
-        authorities.push("Current Balance" + user.transactions[j].current_balance());
-        authorities.push("Total Received" + user.transactions[j].total_received());
-      }
-      
+
       res.status(200).send({
         id: user._id,
         username: user.username,
         email: user.email,
         roles: authorities,
-        transactions: transactions,
         accessToken: token
       });
     });
